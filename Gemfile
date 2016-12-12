@@ -39,7 +39,11 @@ gem 'grape-swagger'
 gem 'grape-swagger-entity'
 # For representable ( https://github.com/apotonick/representable )
 gem 'grape-swagger-representable'
+# => This gem disables the security feature of strong_params at the model layer,
+# => allowing you the use of Grape's own params validation instead.
 gem 'hashie-forbidden_attributes'
+gem 'grape-active_model_serializers'
+
 gem 'pry-byebug'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
