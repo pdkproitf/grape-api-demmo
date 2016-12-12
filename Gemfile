@@ -44,9 +44,16 @@ gem 'grape-swagger-representable'
 gem 'hashie-forbidden_attributes'
 gem 'grape-active_model_serializers'
 
-gem 'pry-byebug'
+gem 'devise'
+# => Using generate db
+gem "factory_girl_rails"
+gem 'ffaker'
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'rspec-rails'
+  gem 'rspec-collection_matchers'
+  gem 'shoulda-matchers', '~> 3.1'
+  gem 'email_spec'
+  gem 'pry-byebug'
 end
 
 group :development do

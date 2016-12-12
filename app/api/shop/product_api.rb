@@ -57,13 +57,5 @@ module Shop
         product.destroy!
       end
     end
-    add_swagger_documentation(
-      api_version: 'v1',
-      hide_doccumentation_path: true,
-      hide_format: true,
-      info: {
-        title: "ProductApi"
-      }
-    )
   end
 end
