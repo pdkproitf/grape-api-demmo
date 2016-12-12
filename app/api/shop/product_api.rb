@@ -2,8 +2,7 @@ require 'grape-swagger'
 module Shop
   class ProductApi < Grape::API
     prefix  :api
-    version 'v1'
-    format  :json
+    version 'v1', using: :accept_version_header
 
     resource :products do
 # => /api/v1/products
@@ -16,7 +15,7 @@ module Shop
       desc "get a product", entity: Entities::ProductWithRoot
       get ':id' do
         product = Product.find(params[:id])
-        present product, with: Entities::ProductEntity
+        # present product, with: Entities::ProductEntity
       end
 # => /api/v1/messages/
       desc "create new product", entity: Entities::ProductWithRoot
