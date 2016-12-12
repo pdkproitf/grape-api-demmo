@@ -15,7 +15,8 @@ class User < ApplicationRecord
   validates :auth_token, uniqueness: true
 
   before_save   :downcase_email
-  
+  before_create :generate_authentication_token!
+
   def generate_authentication_token!
     begin
       self.auth_token = Devise.friendly_token

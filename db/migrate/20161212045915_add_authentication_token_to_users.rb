@@ -3,4 +3,7 @@ class AddAuthenticationTokenToUsers < ActiveRecord::Migration[5.0]
     add_column :users, :auth_token, :string, default: ""
     add_index :users, :auth_token, unique: true
   end
+   def self.down
+    remove_column :users, :auth_token
+  end
 end
