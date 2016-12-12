@@ -5,36 +5,52 @@ module Shop
 
     resource :sessions do
 # => /api/v1/session/
-      desc "login" #, entity: Entities::ProductWithRoot
-      # => this take care of parametter validation
+      desc "Authenticate user and return user object / access token"
+
       params do
-        requires :user, type: Hash do
-          requires :email, type: String, desc: "User's Email"
-          requires :password,  type: String, desc: "password"
-        end
-      end
-      post 'sessions' do
-        desc "Authenticate user"
-        post "login" do
-          @user = User.find_for_authentication(email: params[:email])
-          if @user && @user.valid_password?(params[:password])
-            sign_in @user
-          else
-            error!('401 Unauthorized!', 401)
-          end
-        end
-      end
-# => /api/v1/session/:id
-      desc 'Destroy a user'
-      params do
-        requires :id, type: Integer, desc: 'user id'
-        requires :email, type: String, desc: "User's Email"
+       requires :email, type: String, desc: "User email"
+       requires :password, type: String, desc: "User Password"
       end
 
-      delete ':id' do
-        user = User.find(params[:id])
-        # user.generate_authentication_token!
-        # user.save
+      post do
+       email = params[:email]
+       password = params[:password]
+
+       if email.nil? or password.nil?
+         error!({error_code: 404, error_message: "Invalid Email or Password."},401)
+         return
+       end
+
+       user = User.where(email: email.downcase).first
+       if user.nil?
+         error!({error_code: 404, error_message: "Invalid Email or Password."},401)
+         return
+       end
+
+       if !user.valid_password?(password)
+         error!({error_code: 404, error_message: "Invalid Email or Password."},401)
+         return
+       else
+         current_user = user
+         {status: 'ok', token: user.auth_token}.to_json
+       end
+      end
+
+      desc 'Destroy the access token'
+      params do
+        requires :auth_token, type: String, desc: 'User Access Token'
+      end
+      delete ':auth_token' do
+        auth_token = params[:auth_token]
+        user = User.where(auth_token: auth_token).first
+        if user.nil?
+          error!({error_code: 404, error_message: 'Invalid access token.'}, 401)
+          return
+        else
+          user.generate_authentication_token!
+          user.save
+          {status: 'ok'}
+        end
       end
     end
   end
