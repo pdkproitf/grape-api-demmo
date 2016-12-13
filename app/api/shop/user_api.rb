@@ -3,6 +3,8 @@ module Shop
     prefix  :api
     version 'v1', using: :accept_version_header
 
+     use ApiErrorHandler
+
     resource :users do
 # => /api/v1/users
       desc "show all users" #, entity: Shop::Entities::ProductWithRoot
@@ -14,7 +16,6 @@ module Shop
       desc "get a user" #, entity: Entities::ProductWithRoot
       get ':id' do
         user = User.find(params[:id])
-        # present product, with: Entities::ProductEntity
       end
 # => /api/v1/users/
       desc "create new user" #, entity: Entities::ProductWithRoot
@@ -29,7 +30,9 @@ module Shop
       # => this takes care of creating product
       post 'users' do
         user = User.new(declared(params, include_missing: false)[:user])
-        user.save
+        if user.save
+        else
+        end
         # present product , with: Entities::ProductEntity
       end
 # => /api/v1/product/:id

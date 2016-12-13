@@ -4,7 +4,6 @@ class API < Grape::API
   formatter :json, Grape::Formatter::ActiveModelSerializers
   mount Shop::ProductApi
   mount Shop::UserApi
-  mount Shop::SessionApi
   add_swagger_documentation(
     api_version: 'v1',
     hide_doccumentation_path: false,

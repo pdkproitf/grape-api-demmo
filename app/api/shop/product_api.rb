@@ -4,6 +4,8 @@ module Shop
     prefix  :api
     version 'v1', using: :accept_version_header
 
+    use ApiErrorHandler
+
     resource :products do
 # => /api/v1/products
       desc "show all products", entity: Shop::Entities::ProductWithRoot
