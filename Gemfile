@@ -26,10 +26,11 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
+gem "table_print"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'grape'
+# => Using for type of respon json and render data example
 gem 'grape-entity'
 # => Create routes swagger_doc.json
 gem 'grape-swagger-rails'
@@ -42,9 +43,17 @@ gem 'grape-swagger-representable'
 # => This gem disables the security feature of strong_params at the model layer,
 # => allowing you the use of Grape's own params validation instead.
 gem 'hashie-forbidden_attributes'
+# => Using for type of respon json
 gem 'grape-active_model_serializers'
-
-gem 'devise'
+#****************************************
+# => using for login                    *
+gem 'devise_token_auth'                 #
+# => using for authenticate             *
+gem 'omniauth'                          #
+# => using for get JSON  whren your API *
+# => and client on different domain     *
+gem 'rack-cors', :require => 'rack/cors'#
+#****************************************
 # => Using generate db
 gem "factory_girl_rails"
 gem 'ffaker'
